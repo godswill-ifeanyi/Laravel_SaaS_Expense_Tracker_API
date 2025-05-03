@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Jobs\SendWeeklyExpenseReportJob;;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
     })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->job(new SendWeeklyExpenseReportJob)->weeklyOn(1, '08:00');
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+})->create();

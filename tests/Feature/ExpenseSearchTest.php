@@ -78,12 +78,12 @@ class ExpenseSearchTest extends TestCase
     {
         $this->actingAs($this->admin, 'sanctum');
 
-        $response = $this->getJson('/api/expenses?search=Lunch');
+        $response = $this->getJson('/api/v1/expenses?search=Lunch');
         $response->assertOk()
                  ->assertJsonFragment(['title' => 'Team Lunch'])
                  ->assertJsonMissing(['title' => 'Outsider Expense']);
 
-        $response = $this->getJson('/api/expenses?search=Food');
+        $response = $this->getJson('/api/v1/expenses?search=Food');
         $response->assertOk()
                  ->assertJsonFragment(['category' => 'Food']);
     }
@@ -92,11 +92,11 @@ class ExpenseSearchTest extends TestCase
     {
         $this->actingAs($this->manager, 'sanctum');
 
-        $response = $this->getJson('/api/expenses?search=Travel');
+        $response = $this->getJson('/api/v1/expenses?search=Travel');
         $response->assertOk()
                  ->assertJsonFragment(['title' => 'Client Travel']);
 
-        $response = $this->getJson('/api/expenses?search=Transport');
+        $response = $this->getJson('/api/v1/expenses?search=Transport');
         $response->assertOk()
                  ->assertJsonFragment(['category' => 'Transport']);
     }
@@ -105,11 +105,11 @@ class ExpenseSearchTest extends TestCase
     {
         $this->actingAs($this->employee, 'sanctum');
 
-        $response = $this->getJson('/api/expenses?search=Software');
+        $response = $this->getJson('/api/v1/expenses?search=Software');
         $response->assertOk()
                  ->assertJsonFragment(['title' => 'Software License']);
 
-        $response = $this->getJson('/api/expenses?search=Technology');
+        $response = $this->getJson('/api/v1/expenses?search=Technology');
         $response->assertOk()
                  ->assertJsonFragment(['category' => 'Technology']);
     }
@@ -118,7 +118,7 @@ class ExpenseSearchTest extends TestCase
     {
         $this->actingAs($this->employee, 'sanctum');
 
-        $response = $this->getJson('/api/expenses?search=Outsider');
+        $response = $this->getJson('/api/v1/expenses?search=Outsider');
         $response->assertOk();
         $this->assertEmpty($response->json('data'));
     }

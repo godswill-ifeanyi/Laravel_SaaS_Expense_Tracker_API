@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\ApiResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
@@ -12,11 +13,13 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
+    use ApiResponseTrait;
+
     public function register(Request $request) {
-        $request->validate([ 
+        $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => ['required', Password::defaults()],
+            'password' => ['required', 'confirmed', Password::defaults()],
             'company_id' => 'required|exists:companies,id'
         ]);
 
@@ -25,15 +28,15 @@ class AuthController extends Controller
             'email' => $request->email,
             'company_id' => $request->company_id,
             'role' => 'Admin',
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
+            //'password' => Hash::make($request->password),
         ]);
 
         $token = $user->createToken('auth_token of '.$user->name)->plainTextToken;
 
-        return response()->json([
-            'message' => 'Admin registered successfully.',
+        return $this->success([
             'admin' => new UserResource($user)
-        ], 201);
+        ], 'Admin registered successfully.',201);
     }
 
     public function login(Request $request) {
@@ -42,20 +45,22 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        
         if (!Auth::attempt($request->only(['email','password']))) {
-            $response = [
-                'message' => 'Credentials do not match'
-            ];
-            return response()->json($response, 401);
+            return $this->error('Credentials do not match', 401);
         }
 
         $user = User::where('email', $request->email)->first();
         $token = $user->createToken('auth_token of '.$user->name)->plainTextToken;
 
-        return response()->json([
+        return $this->success([
             'access_token' => $token,
             'token_type' => 'Bearer',
-        ]);
+        ], 'Login Successful.');
+    }
+
+    public function logout() {
+        Auth::user()->currentAccessToken()->delete();
+
+        return $this->success(null, 'Successfully logged out user.');
     }
 }

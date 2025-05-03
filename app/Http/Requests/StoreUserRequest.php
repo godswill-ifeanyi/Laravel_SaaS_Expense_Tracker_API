@@ -25,8 +25,41 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => ['required', Password::defaults()],
+            'password' => ['required',Password::defaults()],
             'role' => 'required|in:Admin,Manager,Employee'
+        ];
+    }
+
+    /**
+     * Get the body parameters for the request.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'name' => [
+                'type' => 'string',
+                'required' => true,
+                'example' => 'John Doe'
+            ],
+            'email' => [
+                'type' => 'string',
+                'required' => true,
+                'format' => 'email',
+                'example' => 'john.doe@example.com'
+            ],
+            'password' => [
+                'type' => 'password',
+                'required' => true,
+                'example' => 'password123'
+            ],
+            'role' => [
+                'type' => 'string',
+                'required' => true,
+                'enum' => ['Admin', 'Manager', 'Employee'],
+                'example' => 'Employee'
+            ],
         ];
     }
 }

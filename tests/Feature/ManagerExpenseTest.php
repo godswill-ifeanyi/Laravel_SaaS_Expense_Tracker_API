@@ -37,7 +37,7 @@ class ManagerExpenseTest extends TestCase
             'category' => 'Meals'
         ];
 
-        $response = $this->postJson('/api/expenses', $payload);
+        $response = $this->postJson('/api/v1/expenses', $payload);
 
         $response->assertStatus(201)
                  ->assertJsonFragment(['title' => 'Client Dinner']);
@@ -50,7 +50,7 @@ class ManagerExpenseTest extends TestCase
             'user_id' => $this->manager->id
         ]);
 
-        $response = $this->getJson('/api/expenses');
+        $response = $this->getJson('/api/v1/expenses');
 
         $response->assertStatus(200)
                  ->assertJsonStructure(['data']);
@@ -63,7 +63,7 @@ class ManagerExpenseTest extends TestCase
             'user_id' => $this->manager->id,
         ]);
 
-        $response = $this->putJson("/api/expenses/{$expense->id}", [
+        $response = $this->putJson("/api/v1/expenses/{$expense->id}", [
             'title' => 'Updated Expense',
             'amount' => 7500,
             'category' => 'Supplies'
@@ -80,7 +80,7 @@ class ManagerExpenseTest extends TestCase
             'user_id' => $this->manager->id,
         ]);
 
-        $response = $this->deleteJson("/api/expenses/{$expense->id}");
+        $response = $this->deleteJson("/api/v1/expenses/{$expense->id}");
 
         $response->assertStatus(403); // Forbidden
     }

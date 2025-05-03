@@ -27,4 +27,33 @@ class UpdateExpenseRequest extends FormRequest
             'category' => 'sometimes|required|string|max:255',
         ];
     }
+
+    /**
+     * Get the body parameters for the request.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'title' => [
+                'type' => 'string',
+                'required' => false,
+                'max' => 255,
+                'example' => 'Trip to market'
+            ],
+            'amount' => [
+                'type' => 'numeric',
+                'required' => false,
+                'min' => 0,
+                'example' => '200'
+            ],
+            'category' => [
+                'type' => 'string',
+                'required' => false,
+                'max' => 255,
+                'example' => 'Travel'
+            ],
+        ];
+    }
 }

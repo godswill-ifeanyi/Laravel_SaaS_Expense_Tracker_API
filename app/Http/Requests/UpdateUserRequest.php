@@ -25,4 +25,21 @@ class UpdateUserRequest extends FormRequest
             'role' => 'required|in:Admin,Manager,Employee'
         ];
     }
+
+    /**
+     * Get the body parameters for the request.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'role' => [
+                'type' => 'string',
+                'required' => true,
+                'enum' => ['Admin', 'Manager', 'Employee'],
+                'example' => 'Employee'
+            ],
+        ];
+    }
 }

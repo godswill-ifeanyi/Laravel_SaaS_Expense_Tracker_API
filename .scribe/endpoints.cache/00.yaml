@@ -6,7 +6,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/login
+    uri: api/v1/login
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -58,7 +58,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/register
+    uri: api/v1/register
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -131,8 +131,38 @@ endpoints:
     custom: []
   -
     httpMethods:
+      - POST
+    uri: api/v1/logout
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
       - GET
-    uri: api/expenses
+    uri: api/v1/expenses
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -171,7 +201,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/expenses
+    uri: api/v1/expenses
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -193,7 +223,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: consequatur
+        example: 'Trip to market'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -203,7 +233,7 @@ endpoints:
         name: amount
         description: ''
         required: true
-        example: 11613.31890586
+        example: 200.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -213,16 +243,16 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: consequatur
+        example: Travel
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: consequatur
-      amount: 11613.31890586
-      category: consequatur
+      title: 'Trip to market'
+      amount: 200.0
+      category: Travel
     fileParameters: []
     responses: []
     responseFields: []
@@ -234,7 +264,7 @@ endpoints:
   -
     httpMethods:
       - PUT
-    uri: 'api/expenses/{id}'
+    uri: 'api/v1/expenses/{id}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -267,7 +297,7 @@ endpoints:
         name: title
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: vmqeopfuudtdsufvyvddq
+        example: 'Trip to market'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -277,7 +307,7 @@ endpoints:
         name: amount
         description: 'Must be at least 0.'
         required: true
-        example: 1
+        example: 200.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -287,16 +317,16 @@ endpoints:
         name: category
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: mniihfqcoynlazghdtqtq
+        example: Travel
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: vmqeopfuudtdsufvyvddq
-      amount: 1
-      category: mniihfqcoynlazghdtqtq
+      title: 'Trip to market'
+      amount: 200.0
+      category: Travel
     fileParameters: []
     responses: []
     responseFields: []
@@ -308,7 +338,7 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: 'api/expenses/{id}'
+    uri: 'api/v1/expenses/{id}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -349,7 +379,7 @@ endpoints:
   -
     httpMethods:
       - GET
-    uri: api/users
+    uri: api/v1/users
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -388,7 +418,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/users
+    uri: api/v1/users
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -410,7 +440,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: consequatur
+        example: 'John Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -420,7 +450,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: carolyne.luettgen@example.org
+        example: john.doe@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -430,7 +460,7 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: consequatur
+        example: password123
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -440,7 +470,7 @@ endpoints:
         name: role
         description: ''
         required: true
-        example: Admin
+        example: Employee
         type: string
         enumValues:
           - Admin
@@ -450,10 +480,10 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: consequatur
-      email: carolyne.luettgen@example.org
-      password: consequatur
-      role: Admin
+      name: 'John Doe'
+      email: john.doe@example.com
+      password: password123
+      role: Employee
     fileParameters: []
     responses: []
     responseFields: []
@@ -465,7 +495,7 @@ endpoints:
   -
     httpMethods:
       - PUT
-    uri: 'api/users/{id}'
+    uri: 'api/v1/users/{id}'
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -498,7 +528,7 @@ endpoints:
         name: role
         description: ''
         required: true
-        example: Admin
+        example: Employee
         type: string
         enumValues:
           - Admin
@@ -508,7 +538,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      role: Admin
+      role: Employee
     fileParameters: []
     responses: []
     responseFields: []

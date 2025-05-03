@@ -10,11 +10,11 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::call(function () {
+/* Schedule::call(function () {
     $admins = User::where('role', 'Admin')->get();
 
     foreach ($admins as $admin) {
         SendWeeklyExpenseReportJob::dispatch($admin);
     }
 })->weeklyOn(1, '08:00'); // Every Monday at 8 AM
-
+ */

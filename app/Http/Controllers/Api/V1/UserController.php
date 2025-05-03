@@ -8,14 +8,23 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        if (Gate::denies('view', Auth::user(), User::class)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $companyId = Auth::user()->company_id;
 
         $users = Cache::remember("users_company_{$companyId}", 60, function () use ($companyId) {
@@ -27,6 +36,17 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
+        /* try {
+            $this->authorize('create', User::class);
+        }
+        catch (AuthorizationException $e) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        } */
+
+        if (Gate::denies('create', User::class)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $admin = Auth::user();
 
         $data = $request->validated();
@@ -44,6 +64,10 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
+        if (Gate::denies('update', Auth::user(), User::class)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $admin = Auth::user();
 
         $data = $request->validated();

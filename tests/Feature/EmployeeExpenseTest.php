@@ -37,7 +37,7 @@ class EmployeeExpenseTest extends TestCase
             'category' => 'Travel'
         ];
 
-        $response = $this->postJson('/api/expenses', $payload);
+        $response = $this->postJson('/api/v1/expenses', $payload);
 
         $response->assertStatus(201)
                  ->assertJsonFragment(['title' => 'Taxi Ride']);
@@ -50,7 +50,7 @@ class EmployeeExpenseTest extends TestCase
             'user_id' => $this->employee->id
         ]);
 
-        $response = $this->getJson('/api/expenses');
+        $response = $this->getJson('/api/v1/expenses');
 
         $response->assertStatus(200)
                  ->assertJsonStructure(['data']);
@@ -63,7 +63,7 @@ class EmployeeExpenseTest extends TestCase
             'user_id' => $this->employee->id,
         ]);
 
-        $response = $this->putJson("/api/expenses/{$expense->id}", [
+        $response = $this->putJson("/api/v1/expenses/{$expense->id}", [
             'title' => 'Changed',
             'amount' => 2000,
             'category' => 'Other'
@@ -79,7 +79,7 @@ class EmployeeExpenseTest extends TestCase
             'user_id' => $this->employee->id,
         ]);
 
-        $response = $this->deleteJson("/api/expenses/{$expense->id}");
+        $response = $this->deleteJson("/api/v1/expenses/{$expense->id}");
 
         $response->assertStatus(403);
     }

@@ -32,7 +32,7 @@ class AdminUserManagementTest extends TestCase
     {
         User::factory()->count(5)->create(['company_id' => $this->admin->company_id]);
 
-        $response = $this->getJson('/api/users');
+        $response = $this->getJson('/api/v1/users');
 
         $response->assertJsonStructure([
             'data' => [
@@ -50,7 +50,7 @@ class AdminUserManagementTest extends TestCase
             'role' => 'Manager'
         ];
 
-        $response = $this->postJson('/api/users', $payload);
+        $response = $this->postJson('/api/v1/users', $payload);
 
         $response->assertStatus(201)
                  ->assertJsonFragment(['email' => 'manager@example.com']);
@@ -63,7 +63,7 @@ class AdminUserManagementTest extends TestCase
             'role' => 'Employee'
         ]);
 
-        $response = $this->putJson("/api/users/{$user->id}", [
+        $response = $this->putJson("/api/v1/users/{$user->id}", [
             'role' => 'Manager'
         ]);
 
@@ -80,7 +80,7 @@ class AdminUserManagementTest extends TestCase
             'role' => 'Employee'
         ]);
 
-        $response = $this->putJson("/api/users/{$otherUser->id}", [
+        $response = $this->putJson("/api/v1/users/{$otherUser->id}", [
             'role' => 'Manager'
         ]);
 

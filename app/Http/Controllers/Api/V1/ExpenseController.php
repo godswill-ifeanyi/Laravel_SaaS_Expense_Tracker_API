@@ -79,16 +79,6 @@ class ExpenseController extends Controller
         // Update the expense
         $expense->update($request->validated());
 
-        AuditLog::create([
-            'user_id' => Auth::id(),
-            'company_id' => Auth::user()->company_id,
-            'action' => 'update',
-            'changes' => [
-                'before' => $oldValues,
-                'after' => $expense->toArray()
-            ],
-        ]);
-
         return new ExpenseResource($expense);
     }
 
@@ -106,22 +96,9 @@ class ExpenseController extends Controller
         if ($expense->company_id !== $user->company_id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
-
-        // Old Value before delete
-        $oldValues = $expense->toArray();
-
+        
         // Expense Delete
         $expense->delete();
-
-        AuditLog::create([
-            'user_id' => Auth::id(),
-            'company_id' => Auth::user()->company_id,
-            'action' => 'delete',
-            'changes' => [
-                'before' => $oldValues,
-                'after' => null
-            ],
-        ]);
 
         return response()->json(null, 204);
     }

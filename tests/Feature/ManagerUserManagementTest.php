@@ -30,7 +30,7 @@ class ManagerUserManagementTest extends TestCase
 
     public function test_manager_cannot_list_users()
     {
-        $response = $this->getJson('/api/users');
+        $response = $this->getJson('/api/v1/users');
 
         $response->assertStatus(403);
     }
@@ -44,7 +44,7 @@ class ManagerUserManagementTest extends TestCase
             'role' => 'Employee'
         ];
 
-        $response = $this->postJson('/api/users', $payload);
+        $response = $this->postJson('/api/v1/users', $payload);
 
         $response->assertStatus(403);
     }
@@ -56,7 +56,7 @@ class ManagerUserManagementTest extends TestCase
             'role' => 'Employee'
         ]);
 
-        $response = $this->putJson("/api/users/{$user->id}", [
+        $response = $this->putJson("/api/v1/users/{$user->id}", [
             'role' => 'Manager'
         ]);
 

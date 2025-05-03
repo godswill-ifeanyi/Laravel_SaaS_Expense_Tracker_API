@@ -20,7 +20,8 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('password'), // Always use this for consistency
+            'password' => 'password',
+            //'password' => Hash::make('password'), // Always use this for consistency
             'role' => $this->faker->randomElement(['Admin', 'Manager', 'Employee']),
             'company_id' => Company::factory(),
         ];

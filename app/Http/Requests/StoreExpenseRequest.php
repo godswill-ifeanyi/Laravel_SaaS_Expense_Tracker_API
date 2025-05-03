@@ -27,4 +27,30 @@ class StoreExpenseRequest extends FormRequest
             'category' => 'required|string',
         ];
     }
+
+    /**
+     * Get the body parameters for the request.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'title' => [
+                'type' => 'string',
+                'required' => true,
+                'example' => 'Trip to market'
+            ],
+            'amount' => [
+                'type' => 'numeric',
+                'required' => true,
+                'example' => '200'
+            ],
+            'category' => [
+                'type' => 'string',
+                'required' => true,
+                'example' => 'Travel'
+            ],
+        ];
+    }
 }

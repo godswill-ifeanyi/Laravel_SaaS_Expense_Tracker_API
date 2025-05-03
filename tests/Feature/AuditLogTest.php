@@ -39,7 +39,7 @@ class AuditLogTest extends TestCase
             'amount' => 2500.00,
         ]);
 
-        $response = $this->putJson("/api/expenses/{$expense->id}", [
+        $response = $this->putJson("/api/v1/expenses/{$expense->id}", [
             'title' => 'Business Lunch',
             'amount' => 3000.00,
             'category' => 'Meals',
@@ -61,7 +61,7 @@ class AuditLogTest extends TestCase
             'user_id' => $this->admin->id,
         ]);
 
-        $response = $this->deleteJson("/api/expenses/{$expense->id}");
+        $response = $this->deleteJson("/api/v1/expenses/{$expense->id}");
 
         $response->assertStatus(204);
 
